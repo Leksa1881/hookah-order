@@ -1,0 +1,197 @@
+:root{
+  --mint:#79c7b4;
+  --ink:#0a0a0a;
+  --paper:#ffffff;
+  --muted:#dfe6e9;
+  --radius:18px;
+  --shadow:0 10px 24px rgba(0,0,0,.10);
+}
+
+/* Сброс/база */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#fff 0%,#fff 55%,rgba(0,0,0,0.03) 100%) no-repeat;
+  display:flex;
+  justify-content:center;
+
+  /* стартовое состояние для анимаций страницы */
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .35s ease, transform .35s ease;
+}
+body.page-ready{
+  opacity:1;
+  transform:none;
+}
+/* затемнение при уходе */
+body.page-leave{
+  transition:opacity .2s ease;
+  opacity:0;
+}
+
+/* Телефонный контейнер */
+.phone{
+  width:min(430px, 100%);
+  min-height:100dvh;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Верхняя шапка */
+.hero{
+  background:var(--mint);
+  height:190px;
+  border-bottom-left-radius:28px;
+  border-bottom-right-radius:28px;
+  position:relative;
+}
+
+/* Карточка контента */
+.card{
+  background:var(--paper);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  width:88%;
+  margin:-70px auto 32px;
+  padding:82px 20px 26px;
+  position:relative;
+}
+
+/* Лого в круге */
+.logo-wrap{
+  position:absolute;
+  left:50%;
+  top:-58px;
+  transform:translateX(-50%);
+  width:132px;
+  height:132px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.10);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.logo-wrap img{
+  width:70%;
+  height:auto;
+  object-fit:contain;
+  filter: grayscale(100%) contrast(120%);
+}
+
+/* Заголовок */
+.title{
+  font-family:"Bree Serif", serif;
+  font-size:32px;
+  line-height:1.1;
+  text-align:center;
+  margin:0 0 14px;
+  letter-spacing:.3px;
+}
+.divider{
+  width:46%;
+  height:2px;
+  margin:8px auto 16px;
+  background:var(--muted);
+  opacity:.45;
+  border-radius:2px;
+}
+
+/* Кнопки */
+.actions{
+  display:grid;
+  gap:16px;
+  margin-top:6px;
+}
+.action{
+  display:grid;
+  grid-template-columns:48px 1fr 28px;
+  align-items:center;
+  gap:16px;
+  width:100%;
+  padding:16px 18px;
+  background:var(--ink);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius);
+  text-decoration:none;
+  font-weight:600;
+  box-shadow:0 4px 0 rgba(0,0,0,.18) inset;
+  transition:transform .06s ease, filter .2s ease, opacity .2s ease;
+}
+.action:focus-visible{ outline:3px solid rgba(121,199,180,.7); outline-offset:2px; }
+.action:hover{ filter:brightness(1.03); }
+.action:active{ transform:translateY(1px); }
+
+.icon-left, .icon-right{
+  display:grid;
+  place-items:center;
+  height:40px;
+  width:100%;
+}
+.icon-left svg, .icon-right svg{ width:26px; height:26px; display:block; }
+.label{
+  font-size:18px;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* Узкие экраны */
+@media (max-width:360px){
+  .title{ font-size:28px; }
+  .action{ grid-template-columns:42px 1fr 24px; padding:14px 16px; }
+  .label{ font-size:16px; }
+}
+
+/* ==== PRELOADER ==== */
+#preloader{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  display:grid;
+  place-items:center;
+  z-index:9999;
+  transition:opacity .35s ease, visibility .35s ease;
+}
+#preloader.hide{ opacity:0; visibility:hidden; }
+
+.preloader-ring{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,.08), inset 0 0 0 6px #f1f5f9, inset 0 0 0 8px var(--mint);
+  animation:pop .45s ease both;
+}
+.preloader-ring::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:6px solid transparent;
+  border-top-color:var(--mint);
+  border-right-color:var(--mint);
+  animation:spin 1s linear infinite;
+}
+.preloader-ring img{
+  width:64%;
+  height:auto;
+  object-fit:contain;
+  filter: grayscale(100%) contrast(120%);
+}
+
+@keyframes spin{ to { transform:rotate(360deg); } }
+@keyframes pop{
+  from{ transform:scale(.9); opacity:.6; }
+  to  { transform:scale(1);  opacity:1; }
+}
